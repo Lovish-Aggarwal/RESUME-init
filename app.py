@@ -1,3 +1,6 @@
+from ast import dump
+import email
+from traceback import print_tb
 from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
@@ -28,26 +31,33 @@ class userModel(db.Model):
         self.number=number
         self.password=password
 
-    def __repr__(self):
-        return f"{self.name}:{self.email}"
+    # def __repr__(self):
+    #     return f"{self.name}:{self.email}:{self.number}:{self.password}"
 
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
 def login():
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
+    if request.method == 'POST':
+        email = request.form['email']
         password = request.form['password']
-        
-        if account:
-            session['loggedin'] = True
-            session['id'] = account['id']
-            session['username'] = account['username']
-            msg = 'Logged in successfully !'
-            return render_template('index.html', msg = msg)
+        data = userModel.query.filter_by(email=email).first()
+        print(" ----------- ")
+        if data:
+            print(data.name)
+            if(data.password== password):
+                session['loggedIn'] = True
+                session['email'] = email
+                session['id'] = data.id
+                return render_template('home.html')
+            else:
+                msg='Wrong Credentials'
+                return render_template('login.html',msg=msg)
         else:
-            msg = 'Incorrect username / password !'
-    return render_template('login.html', msg = msg)
-    if(session.get('loggedIn')==None):
+            msg='User Not Exist'
+            return render_template('login.html',msg=msg)
+
+        
+    if request.method == 'GET':
         return render_template('login.html')
 
 @app.route('/register',methods=['GET', 'POST'])
@@ -70,6 +80,8 @@ def register():
             if "number" in str(e.args):
                 return render_template('signup.html',msg="Number already Exists")
             return str(e)
+    else:
+        return render_template('signup.html')
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

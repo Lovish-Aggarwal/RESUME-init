@@ -1,25 +1,42 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title> Register </title>
-        <link rel="stylesheet" href="">             
-    </head>
-    <body></br></br></br></br></br>
-        <div align="center">
-          <div align="center" style="border-style: double; width: 50%;">
-             <div class="header">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Register </title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body></br></br></br></br></br>
+    <div align="center">
+        <div align="center" style="border-style: double; width: 50%;">
+            <div class="header">
                 <h1 class="word">Register Here</h1>
+                <h4 id="val">  </h4>
                 <h1>{{msg}}</h1>
-             </div></br></br></br>
-                <form action="{{url_for('register')}}" method="post">
-                    <input id="name" name="name" type="text" placeholder="Enter Your name" class="textbox"/></br></br>
-                    <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox"/></br></br>
-                    <input id="number" name="number" type="text" placeholder="Enter Your Phonr No." class="textbox"/></br></br>
-                    <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
-                    <input type="submit" class="btn" value="Sign Up"></br>
-                </form>
-            <p class="bottom">Already have an account?  <a class="bottom" href=""> Sign In here</a></p>
-          </div>
+            </div></br></br></br>
+            <form name="signUp" action="{{url_for('register')}}" onsubmit="return validateForm()" method="post">
+                <input id="name" name="name" type="text" placeholder="Enter Your name" class="textbox" /></br></br>
+                <input id="email" name="email" type="text" placeholder="Enter Your Email ID"
+                    class="textbox" /></br></br>
+                <input id="number" name="number" type="text" placeholder="Enter Your Phonr No."
+                    class="textbox" /></br></br>
+                <input id="password" name="password" type="password" placeholder="Enter Your Password"
+                    class="textbox" /></br></br>
+                <input type="submit" class="btn" value="Sign Up"></br>
+            </form>
+            <p class="bottom">Already have an account? <a class="bottom" href=""> Sign In here</a></p>
         </div>
-    </body>
+    </div>
+    <script>
+        function validateForm() {
+            let x = document.forms["signUp"]["name"].value;
+            if (x == "") {
+                // alert("Name must be filled out");
+                document.getElementById('val').innerText="NAme Must Be their";
+                return false;
+            }
+        }
+    </script>
+</body>
+
 </html>

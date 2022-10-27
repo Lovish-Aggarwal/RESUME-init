@@ -1,7 +1,4 @@
-from ast import dump
-import email
-from traceback import print_tb
-from flask import Flask, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 
@@ -31,8 +28,8 @@ class userModel(db.Model):
         self.number=number
         self.password=password
 
-    # def __repr__(self):
-    #     return f"{self.name}:{self.email}:{self.number}:{self.password}"
+    def __repr__(self):
+        return f"{self.name}:{self.email}:{self.number}:{self.password}"
 
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
@@ -43,12 +40,12 @@ def login():
         data = userModel.query.filter_by(email=email).first()
         print(" ----------- ")
         if data:
-            print(data.name)
+            # print(data.name)
             if(data.password== password):
                 session['loggedIn'] = True
                 session['email'] = email
                 session['id'] = data.id
-                return render_template('home.html')
+                return redirect(url_for('home'))
             else:
                 msg='Wrong Credentials'
                 return render_template('login.html',msg=msg)
@@ -58,6 +55,9 @@ def login():
 
         
     if request.method == 'GET':
+        print(session['loggedIn'])
+        if session['loggedIn']==True:
+            return redirect(url_for('home'))
         return render_template('login.html')
 
 @app.route('/register',methods=['GET', 'POST'])
@@ -82,6 +82,15 @@ def register():
             return str(e)
     else:
         return render_template('signup.html')
+
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/resume')
+def resume():
+    return render_template('resume.html')
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

@@ -31,6 +31,23 @@ class userModel(db.Model):
     def __repr__(self):
         return f"{self.name}:{self.email}:{self.number}:{self.password}"
 
+class skillsModel(db.Model):
+    __tablename__="skills"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    skill = db.Column(db.String(40))
+    rating = db.Column(db.Integer)
+
+    def __init__(self,id,skill,rating) -> None:
+        self.user_id=id
+        self.skill=skill
+        self.rating=rating
+    
+    def __repr__(self) -> str:
+        return self.skill
+
+
+
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
 def login():
@@ -55,8 +72,8 @@ def login():
 
         
     if request.method == 'GET':
-        print(session['loggedIn'])
-        if session['loggedIn']==True:
+        # print(session['loggedIn'])
+        if session.get('loggedIn'):
             return redirect(url_for('home'))
         return render_template('login.html')
 
@@ -72,7 +89,12 @@ def register():
         try:
             db.session.add(newUser)
             db.session.commit()
-            return "Registed"
+            session['loggedIn'] = True
+            session['email'] = email
+            data = userModel.query.filter_by(email=email).first()
+            session['id'] = data.id
+            return redirect(url_for('login'))
+
         except exc.IntegrityError as e:
             print(type(e),e.detail,e.statement,e.args)
             if "email" in str(e.args):
@@ -90,8 +112,28 @@ def home():
 
 @app.route('/resume')
 def resume():
-    pdfkit.from_file('resume.html', 'out.pdf')
     return render_template('resume.html')
+
+@app.route('/skills',methods=['GET', 'POST'])
+def skills():
+    if request.method == 'POST':
+        skill=request.form['skill']
+        rating=request.form['rating']
+        newSkill=skillsModel(session['id'],skill,rating)
+        db.session.add(newSkill)
+        db.session.commit()
+        return redirect(url_for('skills'))
+    else:
+        data=skillsModel.query.filter_by(user_id=session['id']).all()
+        print(data)
+        return render_template('skills.html',data=data)
+
+@app.route('/skillDelete/<id>',methods=['GET', 'POST'])
+def skillDelete(id):
+    skill=skillsModel.query.get(id)
+    db.session.delete(skill)
+    db.session.commit()
+    return redirect(url_for('skills'))
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

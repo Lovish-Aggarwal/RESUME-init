@@ -1,4 +1,3 @@
-import pdfkit
 from flask import Flask, redirect, render_template, request, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc

@@ -1,3 +1,4 @@
+import pdfkit
 from flask import Flask, redirect, render_template, request, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
@@ -90,6 +91,7 @@ def home():
 
 @app.route('/resume')
 def resume():
+    pdfkit.from_file('resume.html', 'out.pdf')
     return render_template('resume.html')
 
 if __name__ == '__main__':

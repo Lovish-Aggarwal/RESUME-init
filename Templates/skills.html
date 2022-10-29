@@ -11,64 +11,109 @@
 
 <body>
     {% include "nav.html" %}
-    
-    <div class="container " >
-        <h2 class="text-center"> Skills Sections </h2>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Open modal
-          </button>
-          
-          <!-- The Modal -->
-          <div class="modal fade" id="myModal">
+
+    <div class="container">
+        <br>
+        <div class=" row ">
+            <h2 class="col-sm-3 offset-sm-4"> Skills Sections </h2>
+            <button type="button" class=" btn btn-success col-sm-3 offset-sm-1" data-bs-toggle="modal"
+                data-bs-target="#myModal" style="float: right;">
+                Add new Skill
+            </button>
+        </div>
+        <div class="row">
+            <h4 class="col-sm-3 offset-sm-4 text-center" style="background-color: rgb(170, 226, 158);">{{ resp }}</h4>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                  <h4 class="modal-title">Add New Skill
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Skill</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="{{url_for('skills')}}" method="post">
+                            <div class="mb-3 mt-3">
+                                <label for="skill" class="form-label">Skill:</label>
+                                <input type="text" class="form-control" id="skill" placeholder="Enter email"
+                                    name="skill">
+                            </div>
+                            <div class="mb-1">
+                                <label for="rating" class="form-label">Rating:</label>
+                                <input type="number" max="10" class="form-control" id="rating"
+                                    placeholder="rate your self out of 10" name="rating">
+                            </div>
+                            <div class="form-check ">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
                 </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="{{url_for('skills')}}" method="post">
-                        <div class="mb-3 mt-3">
-                          <label for="skill" class="form-label">Skill:</label>
-                          <input type="text" class="form-control" id="skill" placeholder="Enter email" name="skill">
-                        </div>
-                        <div class="mb-1">
-                          <label for="rating" class="form-label">Rating:</label>
-                          <input type="number" max="10" class="form-control" id="rating" placeholder="rate your self out of 10" name="rating">
-                        </div>
-                        <div class="form-check ">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
     </div>
     <div class="container">
         <table class="table">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Skill</th>
-                <th scope="col">Rating</th>
-                <th scope="col">delete</th>
-
-              </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Skill</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">delete</th>
+                </tr>
             </thead>
             <tbody>
                 {% for i in data %}
-              <tr>
-                <th scope="row">{{  i.id  }}</th>
-                <td>{{ i.skill  }}</td>
-                <td>{{ i.rating }}</td>
-                <td><a href="/skillDelete/{{i.id}}" class="btn btn-danger"> delete </a></td>
-              </tr>
-              {% endfor %}
+                <tr>
+                    <th scope="row">{{ i.id }}</th>
+                    <td>{{ i.skill }}</td>
+                    <td>{{ i.rating }}</td>
+                    <td>
+                        <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{i.id}}"> Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/skillDelete/{{i.id}}" class="btn btn-danger"> delete </a>
+                    </td>
+                </tr>
+                <div class="modal fade" id="updateModal{{i.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Skill with id {{ i.id }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    style="float: right"></button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/skillUpdate/{{i.id}}"" method=" post">
+                                    <div class="mb-3 mt-3">
+                                        <label for="skill" class="form-label">Skill:</label>
+                                        <input type="text" class="form-control" id="skill" placeholder="Enter email"
+                                            name="skill" value="{{ i.skill }}">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="rating" class="form-label">Rating:</label>
+                                        <input type="number" max="10" class="form-control" id="rating"
+                                            placeholder="rate your self out of 10" name="rating" value="{{ i.rating }}">
+                                    </div>
+                                    <div class="form-check ">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </tbody>
-          </table>
+        </table>
     </div>
 </body>
 

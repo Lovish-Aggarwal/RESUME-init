@@ -7,15 +7,40 @@
         <div class="collapse navbar-collapse" id="collapsible">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> Profile </a>
+                    <a class="nav-link" href="{{ url_for('home') }}"> Profile </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"> Education </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> Work Experience </a>
+                    <a class="nav-link" href="#"> Work Experience  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('skills') }}"> Skills </a>
                 </li>
             </ul>
+            <a href="{{ url_for('resume') }}" class="btn btn-success nav-item" style="margin: 5px"> View Resume</a>
+            <a data-bs-toggle="modal"
+            data-bs-target="#logOut"  class="btn btn-danger nav-item"> logOut</a>
         </div>
     </nav>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="logOut">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm LogOut From Resume-init</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="{{url_for('logOut')}}" method="post">
+                    <button type="submit" class="btn btn-danger">logOut</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

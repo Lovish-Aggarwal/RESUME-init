@@ -105,6 +105,13 @@ def register():
     else:
         return render_template('signup.html')
 
+@app.route('/logout',methods=['GET','POST'])
+def logOut():
+    if request.method == 'POST':
+        session.pop('loggedIn')
+        session.pop('id')
+        session.pop('email')
+        return redirect(url_for('login'))
 
 @app.route('/home')
 def home():
@@ -122,7 +129,7 @@ def skills():
         newSkill=skillsModel(session['id'],skill,rating)
         db.session.add(newSkill)
         db.session.commit()
-        return redirect(url_for('skills',msg="Skill Added"+str(skill)))
+        return redirect(url_for('skills',msg="Skill Added "+str(skill)))
     else:
         msg=request.args
         resp=""

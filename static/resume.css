@@ -7,11 +7,9 @@
 
 } */
 
-.main{
-	width: 80%;
-	background-color: rgb(61, 9, 9);
-	box-shadow: 5px 7px 15px 5px #b9b6b6;
-	margin: 20px auto;
+#resume{
+	margin: 20px;
+	border-style: double;
 }
 
 .top-section{
@@ -19,10 +17,7 @@
 	text-align: center;
 	padding: 20px;
 }
-.profile{
-	width: 150px;
-	border-radius: 50%;
-}
+
 .p1{
 	color: white;
 	font-size: 40px;

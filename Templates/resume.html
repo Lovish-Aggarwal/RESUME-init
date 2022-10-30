@@ -19,20 +19,16 @@
 </head>
 
 <body>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	{% include "nav.html" %}
 	<br>
 
 	<div class="container">
 		<button onclick="generatePDF()">Download</button>
 	</div>
 	<br />
-	<div class="container" id="resume" style="border-style: dotted;">
+	<div id="resume">
 
-		<div class="top-section container-fluid">
+		<div class="top-section container-fluid" style="width: 100%;">
 			<p class="p1">MANOJ <span>ADHIKARI</span></p>
 			<p class="p2">UI / UX Designer</p>
 		</div>
@@ -76,7 +72,7 @@
 					<p >English</p>
 				</div>
 
-				<div class="col-sm-8">
+				<div class="col-sm-9">
 					<div class="content-box">
 						<p class="head">EXPERIENCE</p>
 

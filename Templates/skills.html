@@ -36,7 +36,7 @@
                     </div>
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="{{url_for('skills')}}" method="post">
+                        <form action="{{url_for('skillsAdd')}}" method="post">
                             <div class="mb-3 mt-3">
                                 <label for="skill" class="form-label">Skill:</label>
                                 <input type="text" class="form-control" id="skill" placeholder="Enter email"
@@ -115,6 +115,42 @@
             </tbody>
         </table>
     </div>
+    <div class="pagination" style="justify-content: center;">
+
+        <ul>
+                    {% if data.has_prev %}
+                        <a href="{{ url_for('skills', pg=data.prev_num) }}" class="btn btn-outline-dark">
+                            Previous
+                        </a>
+                    {% endif %}
+
+            {% for page_num in data.iter_pages(left_edge=3, right_edge=3) %}
+                {% if page_num %}
+                    {% if data.page == page_num %}
+                        <a href="{{ url_for('skills', pg=page_num) }}" class="btn btn-dark">
+                            {{ page_num }}
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('skills', pg=page_num) }}" class="btn btn-outline-dark">
+                            {{ page_num }}
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+                {% endfor %}
+                    {% if data.has_next %}
+                        <a href="{{ url_for('skills', pg=data.next_num) }}" class="btn btn-outline-dark">
+                            Next
+                        </a>
+                    {% endif %}
+            <p>
+                {% if data %}
+                <h6>Total No of Rows Fetched {{ data.total }}</h6>
+                {% endif %}
+            </p>
+        </ul>
+    </div>
+    
 </body>
 
 </html>

@@ -121,39 +121,44 @@ def home():
 def resume():
     return render_template('resume.html')
 
-@app.route('/skills',methods=['GET', 'POST'])
-def skills():
-    if request.method == 'POST':
-        skill=request.form['skill']
-        rating=request.form['rating']
-        newSkill=skillsModel(session['id'],skill,rating)
-        db.session.add(newSkill)
-        db.session.commit()
-        return redirect(url_for('skills',msg="Skill Added "+str(skill)))
-    else:
+@app.route('/skills/<pg>',methods=['GET', 'POST'])
+def skills(pg):
+    if request.method == 'GET':
         msg=request.args
         resp=""
         if msg.get('msg'):
             resp=msg['msg']
-        data=skillsModel.query.filter_by(user_id=session['id']).all()
-        print(data)
+        data=skillsModel.query.filter_by(user_id=session['id']).paginate(page=int(pg), per_page=5)
+        print(data.items)
         return render_template('skills.html',data=data,resp=resp)
+
+@app.route('/skillsAdd',methods=['GET', 'POST'])
+def skillsAdd():
+    if request.method == 'POST':
+            skill=request.form['skill']
+            rating=request.form['rating']
+            newSkill=skillsModel(session['id'],skill,rating)
+            db.session.add(newSkill)
+            db.session.commit()
+            return redirect(url_for('skills',pg=1,msg="Skill Added "+str(skill)))
+
+
 
 @app.route('/skillDelete/<id>',methods=['GET', 'POST'])
 def skillDelete(id):
                 skill=skillsModel.query.get(id)
                 db.session.delete(skill)
                 db.session.commit()
-                return redirect(url_for('skills',msg="Skill Deleted with id="+str(id)))
+                return redirect(url_for('skills',pg=1,msg="Skill Deleted with id="+str(id)))
 
 @app.route('/skillUpdate/<id>',methods=['GET', 'POST'])
 def skillUpdate(id):
-    if request.method == 'POST':
         upskill=skillsModel.query.get(id)
+        print(upskill)
         upskill.skill= request.form['skill']        
         upskill.rating= request.form['rating']
         db.session.commit()        
-        return redirect(url_for('skills',msg="Skill Updated with id="+str(id)))
+        return redirect(url_for('skills',pg=1,msg="Skill Updated with id="+str(id)))
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

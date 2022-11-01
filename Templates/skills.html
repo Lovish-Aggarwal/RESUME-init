@@ -14,7 +14,7 @@
 
     <div class="container">
         <br>
-        <div class=" row ">
+        <div class=" row " style="justify-content: center;">
             <h2 class="col-sm-3 offset-sm-4"> Skills Sections </h2>
             <button type="button" class=" btn btn-success col-sm-3 offset-sm-1" data-bs-toggle="modal"
                 data-bs-target="#myModal" style="float: right;">
@@ -47,8 +47,7 @@
                                 <input type="number" max="10" class="form-control" id="rating"
                                     placeholder="rate your self out of 10" name="rating">
                             </div>
-                            <div class="form-check ">
-                            </div>
+                            
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -92,7 +91,7 @@
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <form action="/skillUpdate/{{i.id}}"" method=" post">
+                                <form action="/skillUpdate/{{i.id}}"" method="post">
                                     <div class="mb-3 mt-3">
                                         <label for="skill" class="form-label">Skill:</label>
                                         <input type="text" class="form-control" id="skill" placeholder="Enter email"
@@ -102,8 +101,6 @@
                                         <label for="rating" class="form-label">Rating:</label>
                                         <input type="number" max="10" class="form-control" id="rating"
                                             placeholder="rate your self out of 10" name="rating" value="{{ i.rating }}">
-                                    </div>
-                                    <div class="form-check ">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </form>

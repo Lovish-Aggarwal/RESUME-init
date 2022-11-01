@@ -13,6 +13,8 @@ db = SQLAlchemy(app)
 def create_table():
     db.create_all()
  
+# Data Models
+
 class userModel(db.Model):
     __tablename__ = "user_credentials"
  
@@ -46,7 +48,48 @@ class skillsModel(db.Model):
     def __repr__(self) -> str:
         return self.skill
 
+class experienceModel(db.Model):
+    __tablename__="experiencess"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    title = db.Column(db.String(80))
+    organisation = db.Column(db.String(80))
+    duration = db.Column(db.String(80))
+    discription = db.Column(db.String(500))
 
+    def __init__(self,id,title,organisation,duration,discription) -> None:
+        self.user_id=id
+        self.discription=discription
+        self.title=title
+        self.organisation=organisation
+        self.duration=duration
+    
+    def __repr__(self) -> str:
+        return self.title
+
+
+class educationModel(db.Model):
+    __tablename__="educations"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    insitute = db.Column(db.String(80))
+    course = db.Column(db.String(80))
+    duration = db.Column(db.String(80))
+    grades= db.Column(db.String(20))
+
+    def __init__(self,id,insitute,duration,course,grades) -> None:
+        self.user_id=id
+        self.grades=grades
+        self.insitute=insitute
+        self.course=course
+        self.duration=duration
+    
+    def __repr__(self) -> str:
+        return self.title
+
+
+
+# App routes
 
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
@@ -121,6 +164,8 @@ def home():
 def resume():
     return render_template('resume.html')
 
+# Skills Route
+
 @app.route('/skills/<pg>',methods=['GET', 'POST'])
 def skills(pg):
     if request.method == 'GET':
@@ -159,6 +204,51 @@ def skillUpdate(id):
         upskill.rating= request.form['rating']
         db.session.commit()        
         return redirect(url_for('skills',pg=1,msg="Skill Updated with id="+str(id)))
+
+# Experience Section
+
+@app.route('/workExperience/<pg>',methods=['GET','POST'])
+def experiences(pg):
+    if request.method == 'GET':
+        msg=request.args
+        resp=""
+        if msg.get('msg'):
+            resp=msg['msg']
+        data=experienceModel.query.filter_by(user_id=session['id']).paginate(page=int(pg), per_page=5)
+        print(data.items)
+        return render_template('workExperience.html',data=data,resp=resp)
+
+@app.route('/experienceAdd',methods=['GET', 'POST'])
+def experienceAdd():
+    if request.method == 'POST':
+            title=request.form['title']
+            organisation=request.form['organisation']
+            duration=request.form['duration']
+            discription=request.form['discription']
+            newExperience=experienceModel(session['id'],title,organisation,duration,discription)
+            db.session.add(newExperience)
+            db.session.commit()
+            # return str(newExperience)
+            return redirect(url_for('experiences',pg=1,msg="Experience Added "+str(title)))
+
+@app.route('/experienceDelete/<id>',methods=['GET', 'POST'])
+def experienceDelete(id):
+        experience=experienceModel.query.get(id)
+        db.session.delete(experience)
+        db.session.commit()
+        return redirect(url_for('experiences',pg=1,msg="Work Experience Deleted with id="+str(id)))
+
+
+@app.route('/experienceUpdate/<id>',methods=['GET', 'POST'])
+def experienceUpdate(id):
+        upexp=experienceModel.query.get(id)
+        print(upexp)
+        upexp.title=request.form['title']
+        upexp.organisation=request.form['organisation']
+        upexp.duration=request.form['duration']
+        upexp.discription=request.form['discription']
+        db.session.commit()        
+        return redirect(url_for('experiences',pg=1,msg="Experience Updated with id="+str(id)))
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

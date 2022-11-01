@@ -39,7 +39,7 @@
                         <form action="{{url_for('skillsAdd')}}" method="post">
                             <div class="mb-3 mt-3">
                                 <label for="skill" class="form-label">Skill:</label>
-                                <input type="text" class="form-control" id="skill" placeholder="Enter email"
+                                <input type="text" class="form-control" id="skill" placeholder="Enter skill"
                                     name="skill">
                             </div>
                             <div class="mb-1">
@@ -119,6 +119,10 @@
                         <a href="{{ url_for('skills', pg=data.prev_num) }}" class="btn btn-outline-dark">
                             Previous
                         </a>
+                        {% else %}
+                        <a style="pointer-events: none;" class="btn btn-outline-dark">
+                            Previous
+                        </a>
                     {% endif %}
 
             {% for page_num in data.iter_pages(left_edge=3, right_edge=3) %}
@@ -138,6 +142,10 @@
                     {% if data.has_next %}
                         <a href="{{ url_for('skills', pg=data.next_num) }}" class="btn btn-outline-dark">
                             Next
+                        </a>
+                        {% else %}
+                        <a style="pointer-events: none;" class="btn btn-outline-dark">
+                            Previous
                         </a>
                     {% endif %}
             <p>

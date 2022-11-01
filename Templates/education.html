@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title> Work Experiences </title>
+    <title> Education </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,10 +15,10 @@
     <div class="container">
         <br>
         <div class=" row " style="justify-content: center;">
-            <h2 class="col-sm-5 offset-sm-1"> Work Experience Sections </h2>
+            <h2 class="col-sm-5 offset-sm-1"> Education Section </h2>
             <button type="button" class=" btn btn-success col-sm-3 " data-bs-toggle="modal"
                 data-bs-target="#myModal" style="float: right;">
-                Add Work Exp
+                Add Education
             </button>
         </div>
         <div class="row">
@@ -33,21 +33,21 @@
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Work Exp</h4>
+                        <h4 class="modal-title">Add Education</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="{{url_for('experienceAdd')}}" method="post">
+                        <form action="{{url_for('educationAdd')}}" method="post">
                             <div class="mb-3 mt-3">
-                                <label  class="form-label">Title :</label>
-                                <input type="text" class="form-control" id="title" placeholder="Enter title"
-                                    name="title">
+                                <label  class="form-label">Institute :</label>
+                                <input type="text" class="form-control" id="institute" placeholder="Enter institute Name"
+                                    name="institute">
                             </div>
                             <div class="mb-3 mt-3">
-                                <label  class="form-label">Organisation :</label>
-                                <input type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
-                                    name="organisation">
+                                <label  class="form-label">Course :</label>
+                                <input type="text" class="form-control" id="course" placeholder="Enter Course Name"
+                                    name="course">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Duration :</label>
@@ -55,9 +55,9 @@
                                     name="duration">
                             </div>
                             <div class="mb-3 mt-3">
-                                <label  class="form-label">Discription :</label>
-                                <textarea rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
-                                    name="discription"></textarea>
+                                <label  class="form-label">Grades :</label>
+                                <input type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
+                                    name="grades">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -74,10 +74,10 @@
             <thead>
                 <tr>
                     <th scope="col">id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Organisation</th>
+                    <th scope="col">Institute</th>
+                    <th scope="col">Course</th>
                     <th scope="col">Duration</th>
-                    <th scope="col">Discription</th>
+                    <th scope="col">Grades</th>
                     <th scope="col">Edit</th>
                     <th scope="col">delete</th>
                 </tr>
@@ -86,16 +86,16 @@
                 {% for i in data %}
                 <tr>
                     <th scope="row"> {{ i.id }}</th>
-                    <th scope="row"> {{ i.title }}</th>
-                    <td>{{ i.organisation }}</td>
+                    <th scope="row"> {{ i.insitute }}</th>
+                    <td>{{ i.course }}</td>
                     <td>{{ i.duration }}</td>
-                    <td>{{ i.discription  }}</td>
+                    <td>{{ i.grades  }}</td>
                     <td>
                         <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{i.id}}"> Edit
                         </a>
                     </td>
                     <td>
-                        <a href="/experienceDelete/{{i.id}}" class="btn btn-danger"> delete </a>
+                        <a href="/educationDelete/{{i.id}}" class="btn btn-danger"> delete </a>
                     </td>
                 </tr>
                 <div class="modal fade" id="updateModal{{i.id}}">
@@ -109,16 +109,16 @@
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <form action="/experienceUpdate/{{i.id}}"" method="post">
+                                <form action="/educationUpdate/{{i.id}}"" method="post">
                                     <div class="mb-3 mt-3">
-                                        <label  class="form-label">Title :</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Enter title"
-                                            name="title" value="{{ i.title }}">
+                                        <label  class="form-label">Institute :</label>
+                                        <input type="text" class="form-control" id="institute" placeholder="Enter institute Name"
+                                            name="institute" value="{{ i.institute }}">
                                     </div>
                                     <div class="mb-3 mt-3">
-                                        <label  class="form-label">Organisation :</label>
-                                        <input type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
-                                            name="organisation" value="{{ i.organisation }}">
+                                        <label  class="form-label">Course :</label>
+                                        <input type="text" class="form-control" id="course" placeholder="Enter Course Name"
+                                            name="course" value="{{ i.course }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Duration :</label>
@@ -126,11 +126,11 @@
                                             name="duration" value="{{ i.duration }}">
                                     </div>
                                     <div class="mb-3 mt-3">
-                                        <label  class="form-label">Discription :</label>
-                                        <textarea rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
-                                            name="discription"">{{ i.discription }}</textarea>
+                                        <label  class="form-label">Grades :</label>
+                                        <input type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
+                                            name="grades" value="{{ i.grades }}">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
 
         <ul>
                     {% if data.has_prev %}
-                        <a href="{{ url_for('experiences', pg=data.prev_num) }}" class="btn btn-outline-dark">
+                        <a href="{{ url_for('education', pg=data.prev_num) }}" class="btn btn-outline-dark">
                             Previous
                         </a>
                     {% else %}
@@ -159,11 +159,11 @@
             {% for page_num in data.iter_pages(left_edge=3, right_edge=3) %}
                 {% if page_num %}
                     {% if data.page == page_num %}
-                        <a href="{{ url_for('experiences', pg=page_num) }}" class="btn btn-dark">
+                        <a href="{{ url_for('education', pg=page_num) }}" class="btn btn-dark">
                             {{ page_num }}
                         </a>
                     {% else %}
-                        <a href="{{ url_for('experiences', pg=page_num) }}" class="btn btn-outline-dark">
+                        <a href="{{ url_for('education', pg=page_num) }}" class="btn btn-outline-dark">
                             {{ page_num }}
                         </a>
                     {% endif %}
@@ -171,7 +171,7 @@
 
                 {% endfor %}
                     {% if data.has_next %}
-                        <a href="{{ url_for('experiences', pg=data.next_num) }}" class="btn btn-outline-dark">
+                        <a href="{{ url_for('education', pg=data.next_num) }}" class="btn btn-outline-dark">
                             Next
                         </a>
                         {% else %}

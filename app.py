@@ -85,7 +85,7 @@ class educationModel(db.Model):
         self.duration=duration
     
     def __repr__(self) -> str:
-        return self.title
+        return self.course
 
 
 
@@ -249,6 +249,51 @@ def experienceUpdate(id):
         upexp.discription=request.form['discription']
         db.session.commit()        
         return redirect(url_for('experiences',pg=1,msg="Experience Updated with id="+str(id)))
+
+# Education Section
+
+@app.route('/education/<pg>',methods=['GET','POST'])
+def education(pg):
+    if request.method == 'GET':
+        msg=request.args
+        resp=""
+        if msg.get('msg'):
+            resp=msg['msg']
+        data=educationModel.query.filter_by(user_id=session['id']).paginate(page=int(pg), per_page=5)
+        print(data.items)
+        return render_template('education.html',data=data,resp=resp)
+
+@app.route('/educationAdd',methods=['GET', 'POST'])
+def educationAdd():
+    if request.method == 'POST':
+            institute=request.form['institute']
+            course=request.form['course']
+            duration=request.form['duration']
+            grades=request.form['grades']
+            newEducation=educationModel(session['id'],institute,duration,course,grades)
+            db.session.add(newEducation)
+            db.session.commit()
+            # return str(newExperience)
+            return redirect(url_for('education',pg=1,msg="Education Added "+str(course)))
+
+@app.route('/educationDelete/<id>',methods=['GET', 'POST'])
+def educationDelete(id):
+        education=educationModel.query.get(id)
+        db.session.delete(education)
+        db.session.commit()
+        return redirect(url_for('education',pg=1,msg="Work Education Deleted with id="+str(id)))
+
+
+@app.route('/educationUpdate/<id>',methods=['GET', 'POST'])
+def educationUpdate(id):
+        upedu=educationModel.query.get(id)
+        print(upedu)
+        upedu.institute=request.form['institute']
+        upedu.course=request.form['course']
+        upedu.duration=request.form['duration']
+        upedu.grades=request.form['grades']
+        db.session.commit()        
+        return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

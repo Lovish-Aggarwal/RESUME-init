@@ -188,13 +188,36 @@ def logOut():
         session.pop('number')
         return redirect(url_for('login'))
 
-@app.route('/home')
+@app.route('/home',methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    edu=educationModel.query.filter_by(user_id=session['id']).all()
+    skill=skillsModel.query.filter_by(user_id=session['id']).all()
+    exp=experienceModel.query.filter_by(user_id=session['id']).all()
+    profile=profileModel.query.filter_by(user_id=session['id']).first()
+    print(profile)
+    return render_template('home.html',edu=len(edu),skill=len(skill),exp=len(exp),profile=profile)
+
+@app.route("/profileUpdate",methods=['POST'])
+def profileUpdate():
+    upProfile=profileModel.query.filter_by(user_id=session['id']).first()
+    upProfile.location = request.form['loc']
+    upProfile.currentPosition = request.form['cp']
+    upProfile.profileTitle = request.form['pt']
+    print(request.form['pt'],upProfile.profileTitle)
+    upProfile.profileLink = request.form['pl']
+    print(request.form['pl'],upProfile.profileLink)
+    upProfile.languages = request.form['lang']
+    upProfile.summary = request.form['summary']
+    db.session.commit()
+    return redirect(url_for('home'))
+
 
 @app.route('/resume')
 def resume():
-    return render_template('resume.html')
+    edu=educationModel.query.filter_by(user_id=session['id']).all()
+    skill=skillsModel.query.filter_by(user_id=session['id']).all()
+    exp=experienceModel.query.filter_by(user_id=session['id']).all()
+    return render_template('resume.html',edu=edu,skill=skill,exp=exp)
 
 # Skills Route
 

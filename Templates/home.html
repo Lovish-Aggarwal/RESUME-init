@@ -18,44 +18,46 @@
             <img src="/static/user_avatar.jpg" class="img-fluid" width="200" height="200">
             <br><br>
             <h4>{{ session['name'] }}</h4>
-            <i>email : {{ session['email'] }}</i>
-            <i>phone : {{ session['number'] }}</i>
-            
+            <i>email : {{ session['email'] }}</i><br>
+            <i>phone : {{ session['number'] }}</i><br>
+            <i>Skills Added : {{skill}}</i><br>
+            <i>Work Exp Added: {{exp}}</i><br>
+            <i>Educations Added: {{edu}}</i>
         </div>
         <div class="col-sm-5 offset-sm-1 text-center"
             style="border-style: double; padding: 40px; justify-content: center;">
             <h4>Update Profile details </h4>
-            <form action="" method="post">
+            <form action="{{ url_for('profileUpdate') }}" method="post">
                 <div class="mb-3 mt-3 ">
                     <table>
                         <tr>
                             <td>Location :</td>
                             <td>
-                                <input type="text" class="form-control" id="loc" name="loc">
+                                <input type="text" class="form-control" id="loc" name="loc" value="{{ profile.location }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Current Position :</td>
                             <td>
-                                <input type="text" class="form-control" id="cp" name="cp">
+                                <input type="text" class="form-control" id="cp" name="cp" value="{{ profile.currentPosition }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Profile Link:</td>
                             <td>
-                                <input type="text" class="form-control" id="pl" name="pl">
+                                <input type="text" class="form-control" id="pl" name="pl" value="{{ profile.profileLink }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Profile Titile:</td>
                             <td>
-                                <input type="text" class="form-control" id="pt" name="pt">
+                                <input type="text" class="form-control" id="pt" name="pt" value="{{ profile.profileTitle }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Languages:</td>
                             <td>
-                                <input type="text" class="form-control" id="lang" name="lang">
+                                <input type="text" class="form-control" id="lang" name="lang" value="{{ profile.languages }}">
                             </td>
                         </tr>
                         <tr>
@@ -64,7 +66,7 @@
                         </td>
                         <td>
                             <textarea rows="4" cols="50" class="form-control" id="summary" placeholder="Enter summary for your profile"
-                            name="summary""></textarea>
+                            name="summary"">{{ profile.summary }}</textarea>
                         </td>
                         </tr>
                     </table>

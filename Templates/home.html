@@ -11,7 +11,72 @@
 
 <body>
     {% include "nav.html" %}
-    
+    <br>
+    <div class="row">
+        <div class="col-sm-3 offset-sm-1 text-sm-center"
+            style="border-style: double; padding: 40px; background-color: #151b29; color: white;">
+            <img src="/static/user_avatar.jpg" class="img-fluid" width="200" height="200">
+            <br><br>
+            <h4>{{ session['name'] }}</h4>
+            <i>email : {{ session['email'] }}</i>
+            <i>phone : {{ session['number'] }}</i>
+            
+        </div>
+        <div class="col-sm-5 offset-sm-1 text-center"
+            style="border-style: double; padding: 40px; justify-content: center;">
+            <h4>Update Profile details </h4>
+            <form action="" method="post">
+                <div class="mb-3 mt-3 ">
+                    <table>
+                        <tr>
+                            <td>Location :</td>
+                            <td>
+                                <input type="text" class="form-control" id="loc" name="loc">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Current Position :</td>
+                            <td>
+                                <input type="text" class="form-control" id="cp" name="cp">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Profile Link:</td>
+                            <td>
+                                <input type="text" class="form-control" id="pl" name="pl">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Profile Titile:</td>
+                            <td>
+                                <input type="text" class="form-control" id="pt" name="pt">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Languages:</td>
+                            <td>
+                                <input type="text" class="form-control" id="lang" name="lang">
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <label for="summary"> Summary :</label>
+                        </td>
+                        <td>
+                            <textarea rows="4" cols="50" class="form-control" id="summary" placeholder="Enter summary for your profile"
+                            name="summary""></textarea>
+                        </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <button type=" submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+
 </body>
 
 </html>

@@ -33,6 +33,29 @@ class userModel(db.Model):
     def __repr__(self):
         return f"{self.name}:{self.email}:{self.number}:{self.password}"
 
+class profileModel(db.Model):
+    __tablename__="profile"
+    user_id = db.Column(db.Integer,primary_key=True)
+    location = db.Column(db.String(40))
+    currentPosition = db.Column(db.String(40))
+    profileTitle = db.Column(db.String(40))
+    profileLink = db.Column(db.String(200))
+    languages = db.Column(db.String(80))
+    summary = db.Column(db.String(400))
+    
+
+    def __init__(self,id,loc,currPos,pl,pt,lan,sum) -> None:
+        self.user_id=id
+        self.location = loc
+        self.currentPosition = currPos
+        self.profileTitle = pl
+        self.profileLink = pt
+        self.languages = lan
+        self.summary = sum
+
+    def __repr__(self) -> str:
+        return self.summary
+
 class skillsModel(db.Model):
     __tablename__="skills"
     id = db.Column(db.Integer, primary_key=True)
@@ -105,6 +128,8 @@ def login():
                 session['loggedIn'] = True
                 session['email'] = email
                 session['id'] = data.id
+                session['number'] = data.number
+                session['name'] = data.name
                 return redirect(url_for('home'))
             else:
                 msg='Wrong Credentials'
@@ -136,6 +161,11 @@ def register():
             session['email'] = email
             data = userModel.query.filter_by(email=email).first()
             session['id'] = data.id
+            session['number'] = data.number
+            session['name'] = data.name
+            profile=profileModel(data.id,"","","","","","")
+            db.session.add(profile)
+            db.session.commit()
             return redirect(url_for('login'))
 
         except exc.IntegrityError as e:
@@ -154,6 +184,8 @@ def logOut():
         session.pop('loggedIn')
         session.pop('id')
         session.pop('email')
+        session.pop('name')
+        session.pop('number')
         return redirect(url_for('login'))
 
 @app.route('/home')

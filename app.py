@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from flask import Flask, redirect, render_template, request, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
@@ -117,6 +118,9 @@ class educationModel(db.Model):
 @app.route('/')
 @app.route('/login', methods =['GET', 'POST'])
 def login():
+    if session.get('loggedIn'):
+            return redirect(url_for('home'))
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -141,12 +145,18 @@ def login():
         
     if request.method == 'GET':
         # print(session['loggedIn'])
-        if session.get('loggedIn'):
-            return redirect(url_for('home'))
-        return render_template('login.html')
+        msg=request.args
+        resp=""
+        if msg.get('msg'):
+            resp=msg['msg']
+        msg=resp
+        return render_template('login.html',msg=msg)
 
 @app.route('/register',methods=['GET', 'POST'])
 def register():
+    if session.get('loggedIn'):
+        return redirect(url_for('home'))
+    
     if request.method == 'POST':
         name=     request.form['name']
         email=    request.form['email']
@@ -176,12 +186,13 @@ def register():
                 return render_template('signup.html',msg="Number already Exists")
             return str(e)
     else:
-        if session.get('loggedIn'):
-            return redirect(url_for('home'))
         return render_template('signup.html')
 
 @app.route('/logout',methods=['GET','POST'])
 def logOut():
+    if session.get('loggedIn')==NULL:
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'POST':
         session.pop('loggedIn')
         session.pop('id')
@@ -192,6 +203,8 @@ def logOut():
 
 @app.route('/home',methods=['GET', 'POST'])
 def home():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
     edu=educationModel.query.filter_by(user_id=session['id']).all()
     skill=skillsModel.query.filter_by(user_id=session['id']).all()
     exp=experienceModel.query.filter_by(user_id=session['id']).all()
@@ -199,8 +212,10 @@ def home():
     print(profile)
     return render_template('home.html',edu=len(edu),skill=len(skill),exp=len(exp),profile=profile)
 
-@app.route("/profileUpdate",methods=['POST'])
+@app.route("/profileUpdate",methods=['GET', 'POST'])
 def profileUpdate():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
     upProfile=profileModel.query.filter_by(user_id=session['id']).first()
     upProfile.location = request.form['loc']
     upProfile.currentPosition = request.form['cp']
@@ -214,8 +229,11 @@ def profileUpdate():
     return redirect(url_for('home'))
 
 
-@app.route('/resume')
+@app.route('/resume',methods=['GET', 'POST'])
 def resume():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     edu=educationModel.query.filter_by(user_id=session['id']).all()
     skill=skillsModel.query.filter_by(user_id=session['id']).all()
     exp=experienceModel.query.filter_by(user_id=session['id']).all()
@@ -225,6 +243,9 @@ def resume():
 
 @app.route('/skills/<pg>',methods=['GET', 'POST'])
 def skills(pg):
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'GET':
         msg=request.args
         resp=""
@@ -236,36 +257,48 @@ def skills(pg):
 
 @app.route('/skillsAdd',methods=['GET', 'POST'])
 def skillsAdd():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'POST':
-            skill=request.form['skill']
-            rating=request.form['rating']
-            newSkill=skillsModel(session['id'],skill,rating)
-            db.session.add(newSkill)
-            db.session.commit()
-            return redirect(url_for('skills',pg=1,msg="Skill Added "+str(skill)))
+        skill=request.form['skill']
+        rating=request.form['rating']
+        newSkill=skillsModel(session['id'],skill,rating)
+        db.session.add(newSkill)
+        db.session.commit()
+        return redirect(url_for('skills',pg=1,msg="Skill Added "+str(skill)))
 
 
 
 @app.route('/skillDelete/<id>',methods=['GET', 'POST'])
 def skillDelete(id):
-                skill=skillsModel.query.get(id)
-                db.session.delete(skill)
-                db.session.commit()
-                return redirect(url_for('skills',pg=1,msg="Skill Deleted with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
+    skill=skillsModel.query.get(id)
+    db.session.delete(skill)
+    db.session.commit()
+    return redirect(url_for('skills',pg=1,msg="Skill Deleted with id="+str(id)))
 
 @app.route('/skillUpdate/<id>',methods=['GET', 'POST'])
 def skillUpdate(id):
-        upskill=skillsModel.query.get(id)
-        print(upskill)
-        upskill.skill= request.form['skill']        
-        upskill.rating= request.form['rating']
-        db.session.commit()        
-        return redirect(url_for('skills',pg=1,msg="Skill Updated with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
+    upskill=skillsModel.query.get(id)
+    print(upskill)
+    upskill.skill= request.form['skill']        
+    upskill.rating= request.form['rating']
+    db.session.commit()        
+    return redirect(url_for('skills',pg=1,msg="Skill Updated with id="+str(id)))
 
 # Experience Section
 
 @app.route('/workExperience/<pg>',methods=['GET','POST'])
 def experiences(pg):
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'GET':
         msg=request.args
         resp=""
@@ -277,6 +310,9 @@ def experiences(pg):
 
 @app.route('/experienceAdd',methods=['GET', 'POST'])
 def experienceAdd():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'POST':
             title=request.form['title']
             organisation=request.form['organisation']
@@ -290,27 +326,35 @@ def experienceAdd():
 
 @app.route('/experienceDelete/<id>',methods=['GET', 'POST'])
 def experienceDelete(id):
-        experience=experienceModel.query.get(id)
-        db.session.delete(experience)
-        db.session.commit()
-        return redirect(url_for('experiences',pg=1,msg="Work Experience Deleted with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+    experience=experienceModel.query.get(id)
+    db.session.delete(experience)
+    db.session.commit()
+    return redirect(url_for('experiences',pg=1,msg="Work Experience Deleted with id="+str(id)))
 
 
 @app.route('/experienceUpdate/<id>',methods=['GET', 'POST'])
 def experienceUpdate(id):
-        upexp=experienceModel.query.get(id)
-        print(upexp)
-        upexp.title=request.form['title']
-        upexp.organisation=request.form['organisation']
-        upexp.duration=request.form['duration']
-        upexp.discription=request.form['discription']
-        db.session.commit()        
-        return redirect(url_for('experiences',pg=1,msg="Experience Updated with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
+    upexp=experienceModel.query.get(id)
+    print(upexp)
+    upexp.title=request.form['title']
+    upexp.organisation=request.form['organisation']
+    upexp.duration=request.form['duration']
+    upexp.discription=request.form['discription']
+    db.session.commit()        
+    return redirect(url_for('experiences',pg=1,msg="Experience Updated with id="+str(id)))
 
 # Education Section
 
 @app.route('/education/<pg>',methods=['GET','POST'])
 def education(pg):
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'GET':
         msg=request.args
         resp=""
@@ -322,6 +366,9 @@ def education(pg):
 
 @app.route('/educationAdd',methods=['GET', 'POST'])
 def educationAdd():
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
     if request.method == 'POST':
             institute=request.form['institute']
             course=request.form['course']
@@ -335,22 +382,28 @@ def educationAdd():
 
 @app.route('/educationDelete/<id>',methods=['GET', 'POST'])
 def educationDelete(id):
-        education=educationModel.query.get(id)
-        db.session.delete(education)
-        db.session.commit()
-        return redirect(url_for('education',pg=1,msg="Work Education Deleted with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+
+    education=educationModel.query.get(id)
+    db.session.delete(education)
+    db.session.commit()
+    return redirect(url_for('education',pg=1,msg="Work Education Deleted with id="+str(id)))
 
 
 @app.route('/educationUpdate/<id>',methods=['GET', 'POST'])
 def educationUpdate(id):
-        upedu=educationModel.query.get(id)
-        print(upedu)
-        upedu.institute=request.form['institute']
-        upedu.course=request.form['course']
-        upedu.duration=request.form['duration']
-        upedu.grades=request.form['grades']
-        db.session.commit()        
-        return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
+    if not session.get('loggedIn'):
+        return redirect(url_for('login',msg="Please Login First"))
+        
+    upedu=educationModel.query.get(id)
+    print(upedu)
+    upedu.institute=request.form['institute']
+    upedu.course=request.form['course']
+    upedu.duration=request.form['duration']
+    upedu.grades=request.form['grades']
+    db.session.commit()        
+    return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
 
 if __name__ == '__main__':
    app.run(debug=True,port=5000)

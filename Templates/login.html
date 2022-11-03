@@ -21,7 +21,9 @@
         <div class="mb-3 mt-3">
           <label for="email" class="form-label">Email:</label>
           <input
+            required
             type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             class="form-control"
             id="email"
             placeholder="Enter email"
@@ -31,6 +33,7 @@
         <div class="mb-3">
           <label for="pwd" class="form-label">Password:</label>
           <input
+          required
             type="password"
             class="form-control"
             id="password"

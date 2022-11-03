@@ -41,22 +41,22 @@
                         <form action="{{url_for('experienceAdd')}}" method="post">
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Title :</label>
-                                <input type="text" class="form-control" id="title" placeholder="Enter title"
+                                <input required required type="text" class="form-control" id="title" placeholder="Enter title"
                                     name="title">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Organisation :</label>
-                                <input type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
+                                <input required required type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
                                     name="organisation">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Duration :</label>
-                                <input type="text" class="form-control" id="duration" placeholder="start - End"
+                                <input required required type="text" class="form-control" id="duration" placeholder="start - End"
                                     name="duration">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Discription :</label>
-                                <textarea rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
+                                <textarea required rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
                                     name="discription"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -112,22 +112,22 @@
                                 <form action="/experienceUpdate/{{i.id}}"" method="post">
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Title :</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Enter title"
+                                        <input required type="text" class="form-control" id="title" placeholder="Enter title"
                                             name="title" value="{{ i.title }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Organisation :</label>
-                                        <input type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
+                                        <input required type="text" class="form-control" id="organisation" placeholder="Enter Organisation"
                                             name="organisation" value="{{ i.organisation }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Duration :</label>
-                                        <input type="text" class="form-control" id="duration" placeholder="start - End"
+                                        <input required type="text" class="form-control" id="duration" placeholder="start - End"
                                             name="duration" value="{{ i.duration }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Discription :</label>
-                                        <textarea rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
+                                        <textarea required rows="4" cols="50" class="form-control" id="discription" placeholder="Enter Discription"
                                             name="discription"">{{ i.discription }}</textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>

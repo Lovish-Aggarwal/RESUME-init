@@ -176,6 +176,8 @@ def register():
                 return render_template('signup.html',msg="Number already Exists")
             return str(e)
     else:
+        if session.get('loggedIn'):
+            return redirect(url_for('home'))
         return render_template('signup.html')
 
 @app.route('/logout',methods=['GET','POST'])

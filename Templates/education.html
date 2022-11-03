@@ -41,22 +41,22 @@
                         <form action="{{url_for('educationAdd')}}" method="post">
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Institute :</label>
-                                <input type="text" class="form-control" id="institute" placeholder="Enter institute Name"
+                                <input required type="text" class="form-control" id="institute" placeholder="Enter institute Name"
                                     name="institute">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Course :</label>
-                                <input type="text" class="form-control" id="course" placeholder="Enter Course Name"
+                                <input required type="text" class="form-control" id="course" placeholder="Enter Course Name"
                                     name="course">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Duration :</label>
-                                <input type="text" class="form-control" id="duration" placeholder="start - End"
+                                <input required type="text" class="form-control" id="duration" placeholder="start - End"
                                     name="duration">
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Grades :</label>
-                                <input type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
+                                <input required type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
                                     name="grades">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -112,22 +112,22 @@
                                 <form action="/educationUpdate/{{i.id}}"" method="post">
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Institute :</label>
-                                        <input type="text" class="form-control" id="institute" placeholder="Enter institute Name"
-                                            name="institute" value="{{ i.institute }}">
+                                        <input required type="text" class="form-control" id="institute" placeholder="Enter institute Name"
+                                            name="institute" value="{{ i.insitute }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Course :</label>
-                                        <input type="text" class="form-control" id="course" placeholder="Enter Course Name"
+                                        <input required type="text" class="form-control" id="course" placeholder="Enter Course Name"
                                             name="course" value="{{ i.course }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Duration :</label>
-                                        <input type="text" class="form-control" id="duration" placeholder="start - End"
+                                        <input required type="text" class="form-control" id="duration" placeholder="start - End"
                                             name="duration" value="{{ i.duration }}">
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label  class="form-label">Grades :</label>
-                                        <input type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
+                                        <input required type="text" class="form-control" id="grades" placeholder="Enter Your Grades"
                                             name="grades" value="{{ i.grades }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -15,14 +15,14 @@
                 <h1>{{msg}}</h1>
             </div></br></br></br>
             <form name="signUp" action="{{url_for('register')}}" onsubmit="return validateForm()" method="post">
-                <input id="name" name="name" type="text" placeholder="Enter Your name" class="textbox" /></br></br>
-                <input id="email" name="email" type="text" placeholder="Enter Your Email ID"
+                <input required id="name" name="name" type="text" placeholder="Enter Your name" class="textbox" /></br></br>
+                <input required id="email" name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Enter Your Email ID"
                     class="textbox" /></br></br>
-                <input id="number" name="number" type="text" placeholder="Enter Your Phonr No."
+                <input required id="number" name="number" pattern="[0-9]{10}"  type="text" placeholder="Enter Your Phonr No."
                     class="textbox" /></br></br>
-                <input id="password" name="password" type="password" placeholder="Enter Your Password"
+                <input required id="password" name="password" type="password" placeholder="Enter Your Password"
                     class="textbox" /></br></br>
-                <input type="submit" class="btn" value="Sign Up"></br>
+                <input required type="submit" class="btn" value="Sign Up"></br>
             </form>
             <p class="bottom">Already have an account? <a class="bottom" href=""> Sign In here</a></p>
         </div>

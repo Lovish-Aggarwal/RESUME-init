@@ -39,12 +39,12 @@
                         <form action="{{url_for('skillsAdd')}}" method="post">
                             <div class="mb-3 mt-3">
                                 <label for="skill" class="form-label">Skill:</label>
-                                <input type="text" class="form-control" id="skill" placeholder="Enter skill"
+                                <input required type="text" class="form-control" id="skill" placeholder="Enter skill"
                                     name="skill">
                             </div>
                             <div class="mb-1">
                                 <label for="rating" class="form-label">Rating:</label>
-                                <input type="number" max="10" class="form-control" id="rating"
+                                <input required type="number" min="1" max="10" class="form-control" id="rating"
                                     placeholder="rate your self out of 10" name="rating">
                             </div>
                             
@@ -94,12 +94,12 @@
                                 <form action="/skillUpdate/{{i.id}}"" method="post">
                                     <div class="mb-3 mt-3">
                                         <label for="skill" class="form-label">Skill:</label>
-                                        <input type="text" class="form-control" id="skill" placeholder="Enter email"
+                                        <input required type="text" class="form-control" id="skill" placeholder="Enter email"
                                             name="skill" value="{{ i.skill }}">
                                     </div>
                                     <div class="mb-1">
                                         <label for="rating" class="form-label">Rating:</label>
-                                        <input type="number" max="10" class="form-control" id="rating"
+                                        <input required type="number" min="1" max="10" class="form-control" id="rating"
                                             placeholder="rate your self out of 10" name="rating" value="{{ i.rating }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>

@@ -33,31 +33,31 @@
                         <tr>
                             <td>Location :</td>
                             <td>
-                                <input type="text" class="form-control" id="loc" name="loc" value="{{ profile.location }}">
+                                <input required type="text" class="form-control" id="loc" name="loc" value="{{ profile.location }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Current Position :</td>
                             <td>
-                                <input type="text" class="form-control" id="cp" name="cp" value="{{ profile.currentPosition }}">
+                                <input required type="text" class="form-control" id="cp" name="cp" value="{{ profile.currentPosition }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Profile Link:</td>
                             <td>
-                                <input type="text" class="form-control" id="pl" name="pl" value="{{ profile.profileLink }}">
+                                <input required type="text" class="form-control" id="pl" name="pl" value="{{ profile.profileLink }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Profile Titile:</td>
                             <td>
-                                <input type="text" class="form-control" id="pt" name="pt" value="{{ profile.profileTitle }}">
+                                <input required type="text" class="form-control" id="pt" name="pt" value="{{ profile.profileTitle }}">
                             </td>
                         </tr>
                         <tr>
                             <td>Languages:</td>
                             <td>
-                                <input type="text" class="form-control" id="lang" name="lang" value="{{ profile.languages }}">
+                                <input required type="text" class="form-control" id="lang" name="lang" value="{{ profile.languages }}">
                             </td>
                         </tr>
                         <tr>
@@ -65,7 +65,7 @@
                             <label for="summary"> Summary :</label>
                         </td>
                         <td>
-                            <textarea rows="4" cols="50" class="form-control" id="summary" placeholder="Enter summary for your profile"
+                            <textarea insitute rows="4" cols="50" class="form-control" id="summary" placeholder="Enter summary for your profile"
                             name="summary"">{{ profile.summary }}</textarea>
                         </td>
                         </tr>

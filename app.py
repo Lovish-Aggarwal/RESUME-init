@@ -157,7 +157,7 @@ def register():
         return redirect(url_for('home'))
     
     if request.method == 'POST':
-        name=     request.form['name']
+        name=     request.form['name'].strip()
         email=    request.form['email']
         number=   request.form['number']
         password= request.form['password']
@@ -216,14 +216,14 @@ def profileUpdate():
     if not session.get('loggedIn'):
         return redirect(url_for('login',msg="Please Login First"))
     upProfile=profileModel.query.filter_by(user_id=session['id']).first()
-    upProfile.location = request.form['loc']
-    upProfile.currentPosition = request.form['cp']
-    upProfile.profileTitle = request.form['pt']
+    upProfile.location = request.form['loc'].strip()
+    upProfile.currentPosition = request.form['cp'].strip()
+    upProfile.profileTitle = request.form['pt'].strip()
     print(request.form['pt'],upProfile.profileTitle)
-    upProfile.profileLink = request.form['pl']
+    upProfile.profileLink = request.form['pl'].strip()
     print(request.form['pl'],upProfile.profileLink)
-    upProfile.languages = request.form['lang']
-    upProfile.summary = request.form['summary']
+    upProfile.languages = request.form['lang'].strip()
+    upProfile.summary = request.form['summary'].strip()
     db.session.commit()
     return redirect(url_for('home'))
 
@@ -238,6 +238,16 @@ def resume():
     exp=experienceModel.query.filter_by(user_id=session['id']).all()
     profile=profileModel.query.filter_by(user_id=session['id']).first()
     return render_template('resume.html',edu=edu,skill=skill,exp=exp,profile=profile)
+
+# Public View Link
+@app.route('/resumeView/<id>',methods=['GET', 'POST'])
+def resumeView(id):
+    data = userModel.query.filter_by(id=id).first()
+    edu=educationModel.query.filter_by(user_id=id).all()
+    skill=skillsModel.query.filter_by(user_id=id).all()
+    exp=experienceModel.query.filter_by(user_id=id).all()
+    profile=profileModel.query.filter_by(user_id=id).first()
+    return render_template('viewresume.html',data=data,edu=edu,skill=skill,exp=exp,profile=profile)
 
 # Skills Route
 
@@ -261,7 +271,7 @@ def skillsAdd():
         return redirect(url_for('login',msg="Please Login First"))
 
     if request.method == 'POST':
-        skill=request.form['skill']
+        skill=request.form['skill'].strip()
         rating=request.form['rating']
         newSkill=skillsModel(session['id'],skill,rating)
         db.session.add(newSkill)
@@ -287,7 +297,7 @@ def skillUpdate(id):
 
     upskill=skillsModel.query.get(id)
     print(upskill)
-    upskill.skill= request.form['skill']        
+    upskill.skill= request.form['skill'].strip()       
     upskill.rating= request.form['rating']
     db.session.commit()        
     return redirect(url_for('skills',pg=1,msg="Skill Updated with id="+str(id)))
@@ -314,10 +324,10 @@ def experienceAdd():
         return redirect(url_for('login',msg="Please Login First"))
 
     if request.method == 'POST':
-            title=request.form['title']
-            organisation=request.form['organisation']
-            duration=request.form['duration']
-            discription=request.form['discription']
+            title=request.form['title'].strip()
+            organisation=request.form['organisation'].strip()
+            duration=request.form['duration'].strip()
+            discription=request.form['discription'].strip()
             newExperience=experienceModel(session['id'],title,organisation,duration,discription)
             db.session.add(newExperience)
             db.session.commit()
@@ -341,10 +351,10 @@ def experienceUpdate(id):
 
     upexp=experienceModel.query.get(id)
     print(upexp)
-    upexp.title=request.form['title']
-    upexp.organisation=request.form['organisation']
-    upexp.duration=request.form['duration']
-    upexp.discription=request.form['discription']
+    upexp.title=request.form['title'].strip()
+    upexp.organisation=request.form['organisation'].strip()
+    upexp.duration=request.form['duration'].strip()
+    upexp.discription=request.form['discription'].strip()
     db.session.commit()        
     return redirect(url_for('experiences',pg=1,msg="Experience Updated with id="+str(id)))
 
@@ -370,10 +380,10 @@ def educationAdd():
         return redirect(url_for('login',msg="Please Login First"))
 
     if request.method == 'POST':
-            institute=request.form['institute']
-            course=request.form['course']
-            duration=request.form['duration']
-            grades=request.form['grades']
+            institute=request.form['institute'].strip()
+            course=request.form['course'].strip()
+            duration=request.form['duration'].strip()
+            grades=request.form['grades'].strip()
             newEducation=educationModel(session['id'],institute,duration,course,grades)
             db.session.add(newEducation)
             db.session.commit()
@@ -398,10 +408,10 @@ def educationUpdate(id):
 
     upedu=educationModel.query.get(id)
     print(upedu)
-    upedu.insitute=request.form['institute']
-    upedu.course=request.form['course']
-    upedu.duration=request.form['duration']
-    upedu.grades=request.form['grades']
+    upedu.insitute=request.form['institute'].strip()
+    upedu.course=request.form['course'].strip()
+    upedu.duration=request.form['duration'].strip()
+    upedu.grades=request.form['grades'].strip()
     db.session.commit()        
     return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
 

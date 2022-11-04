@@ -15,8 +15,15 @@
     <title>Login !</title>
   </head>
   <body>
-    <div class="container col-sm-4">
-      <h3>{{ msg }}</h3>
+    <div class="row" style="margin:10%;">
+
+      <div class="col-sm-9 col-lg-6 col-xl-5 text-sm-center">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+        class="img-fluid" alt="Sample image">
+        <h3 style="font-family: sans-serif; font-weight: 600;">Resume-init</h3>
+    </div>
+    <div class="col-sm-8 col-lg-6 col-xl-4 offset-xl-1">
+      <h4>{{ msg }}</h4>
       <form action="\login" method="post">
         <div class="mb-3 mt-3">
           <label for="email" class="form-label">Email:</label>
@@ -45,5 +52,7 @@
         <p class="bottom">Create New account? <a class="bottom" href="{{ url_for('register') }}"> SignUp here</a></p>
       </form>
     </div>
+  </div>
   </body>
-</html>
+  </html>
+  

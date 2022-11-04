@@ -21,18 +21,15 @@
 </head>
 
 <body>
-	{% include "nav.html" %}
 	<br>
-
+    
 	<div class="container text-sm-center" >
 		<button class="btn btn-primary" onclick="generatePDF()">Download</button>
-		<input type="text"  class="offset-sm-1"value="{{url_for('resumeView',id=session['id'])}}" id="myInput" disabled>
-		<button class="btn btn-success" onclick="myFunction()">Get Link</button>
 	</div>
 	<div id="resume">
 
 		<div class="top-section container-fluid" style="width: 100%;">
-			<p class="p1">{{ session['name'] }}</p>
+			<p class="p1">{{ data.name }}</p>
 			<p class="p2">{{ profile.currentPosition }}  | {{ profile.location }} </p>
 		</div>
 		<div class="container">
@@ -42,8 +39,8 @@
 
 
 					<p class="head">Contact</p>
-					<p><i class="fa fa-phone" aria-hidden="true">{{ session['number'] }}</i> &nbsp;&nbsp;</p>
-					<p><i class="fa fa-envelope" aria-hidden="true">{{ session['email'] }}</i> &nbsp;&nbsp;</p>
+					<p><i class="fa fa-phone" aria-hidden="true">{{ data.number }}</i> &nbsp;&nbsp;</p>
+					<p><i class="fa fa-envelope" aria-hidden="true">{{ data.email }}</i> &nbsp;&nbsp;</p>
 					<p><i class="fa fa-home" aria-hidden="true"><a href="{{ profile.profileLink }}" target="_blank">{{ profile.profileTitle }}</a></i> &nbsp;&nbsp;</p>
 
 

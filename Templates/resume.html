@@ -15,6 +15,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
 		integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/static/download.js"></script>
+		
 
 </head>
 
@@ -22,15 +24,16 @@
 	{% include "nav.html" %}
 	<br>
 
-	<div class="container">
-		<button onclick="generatePDF()">Download</button>
+	<div class="container text-sm-center" >
+		<button class="btn btn-primary" onclick="generatePDF()">Download</button>
+		<input type="text"  class="offset-sm-1"value="http://resumeView/<id>" id="myInput" disabled>
+		<button class="btn btn-success" onclick="myFunction()">Get Link</button>
 	</div>
-	<br />
 	<div id="resume">
 
 		<div class="top-section container-fluid" style="width: 100%;">
-			<p class="p1">MANOJ <span>ADHIKARI</span></p>
-			<p class="p2">UI / UX Designer</p>
+			<p class="p1">{{ session['name'] }}</p>
+			<p class="p2">{{ profile.currentPosition }}  | {{ profile.location }} </p>
 		</div>
 		<div class="container">
 			<div class="row">
@@ -39,9 +42,9 @@
 
 
 					<p class="head">Contact</p>
-					<p><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;&nbsp;898392888</p>
-					<p><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;&nbsp;dummymail.com</p>
-					<p><i class="fa fa-home" aria-hidden="true"></i> &nbsp;&nbsp;United Kingdom</p>
+					<p><i class="fa fa-phone" aria-hidden="true">{{ session['number'] }}</i> &nbsp;&nbsp;</p>
+					<p><i class="fa fa-envelope" aria-hidden="true">{{ session['email'] }}</i> &nbsp;&nbsp;</p>
+					<p><i class="fa fa-home" aria-hidden="true"><a href="{{ profile.profileLink }}" target="_blank">{{ profile.profileTitle }}</a></i> &nbsp;&nbsp;</p>
 
 
 					<br />
@@ -107,43 +110,6 @@
 						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
 						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
 						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-
-
 					</div>
 				</div>
 			</div>

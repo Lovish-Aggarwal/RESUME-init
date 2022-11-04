@@ -1,5 +1,4 @@
-from asyncio.windows_events import NULL
-from flask import Flask, redirect, render_template, request, session, url_for, flash
+from flask import Flask, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 
@@ -190,7 +189,7 @@ def register():
 
 @app.route('/logout',methods=['GET','POST'])
 def logOut():
-    if session.get('loggedIn')==NULL:
+    if not session.get('loggedIn'):
         return redirect(url_for('login',msg="Please Login First"))
 
     if request.method == 'POST':
@@ -237,7 +236,8 @@ def resume():
     edu=educationModel.query.filter_by(user_id=session['id']).all()
     skill=skillsModel.query.filter_by(user_id=session['id']).all()
     exp=experienceModel.query.filter_by(user_id=session['id']).all()
-    return render_template('resume.html',edu=edu,skill=skill,exp=exp)
+    profile=profileModel.query.filter_by(user_id=session['id']).first()
+    return render_template('resume.html',edu=edu,skill=skill,exp=exp,profile=profile)
 
 # Skills Route
 
@@ -395,7 +395,7 @@ def educationDelete(id):
 def educationUpdate(id):
     if not session.get('loggedIn'):
         return redirect(url_for('login',msg="Please Login First"))
-        
+
     upedu=educationModel.query.get(id)
     print(upedu)
     upedu.institute=request.form['institute']

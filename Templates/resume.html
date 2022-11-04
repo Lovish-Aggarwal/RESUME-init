@@ -47,69 +47,68 @@
 					<p><i class="fa fa-home" aria-hidden="true"><a href="{{ profile.profileLink }}" target="_blank">{{ profile.profileTitle }}</a></i> &nbsp;&nbsp;</p>
 
 
+					{% if skill %}
 					<br />
-					<p class="head">my skills</p>
+					<p class="head">My Skills</p>
 					<ul class="skills">
-						<li><span>Web Design</span></li>
-						<li><span>Grapic Design</span></li>
-						<li><span>HTML-5</span></li>
-						<li><span>CSS-3</span></li>
-						<li><span>Java Script</span></li>
-						<li><span>Jquery</span></li>
-
+						{% for i in skill %}
+						<li><b>{{i.skill}}</b>   (<i>{{i.rating}}</i>/10)</li>
+						{% endfor %}
 					</ul>
-
-					<br />
-					<p class="head">awards</p>
-					<p>CSS Design Awards</p>
-					<p>D&AD Awards</p>
-					<p>CSS Winner Awards</p>
-					<p>The Shorty Awards</p>
-					<p>Awwwards</p>
-
+					{% endif %}
 
 
 					<br />
+					{% if profile.languages %}
 					<p class="head">Languages</p>
-					<p>Hindi</p>
-					<p>English</p>
+					{% for i in profile.languages.split(",")%}
+					<li>{{i}}</li>
+					{%endfor%}
+					{%endif%}
 				</div>
 
 				<div class="col-sm-9">
 					<div class="content-box">
+						{% if profile.summary %}
+						<span class="head">Profile </span>
+							<div style="white-space: pre-line">
+								{{profile.summary}}
+							</div>
+							<br>
+						{% endif %}
+						
+						{% if edu %}
+						<div>
+							<p class="head">Education</p>
+							{% for i in edu %}
+							<li>
+								<span><b>{{ i.course }}</b></span>
+								<span style="float: right;">Duration : {{i.duration}}</span>
+								<br>
+								<span>Institute : <strong>{{i.insitute}}</strong></span>
+								<span style="float: right;">Grades : {{i.grades}}</span>
+							</li>
+							{%endfor%}
+						</div>
+						{% endif %}
+
+						{% if exp %}
+						<br>
 						<p class="head">EXPERIENCE</p>
+						{% for i in exp %}
+							<li>
+							<span><b>{{ i.title }}</b></span>
+							<span style="float: right;"><strong> {{i.organisation}} </strong></span>
+							<br>
+							<span>Duration : <i>{{i.duration}}</i></span>
+							<span style="white-space: pre-line">
+								{{i.discription}}
+							</span>
+							</li>
+							<br />
+						{% endfor %}
+						{% endif %}
 
-						<p>UI DESIGNER IN LOREM IPSUM (2018 - NOW)</p>
-						<p>
-							Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has
-							Been The
-							Industry's Standard Dummy Text Ever Since The 1500s, When An Unknown Printer Took A Galley
-							Of Type
-							And Scrambled It To Make A Type Specimen Book.</p>
-
-						<p>UI DESIGNER (2013 - 2015)</p>
-						<p>
-							Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has
-							Been The
-							Industry's Standard Dummy Text Ever Since The 1500s
-						</p>
-
-						<p>GRAPIC DESIGNER(2010)</p>
-						<p>
-							Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Lorem Ipsum Has
-							Been The
-							Industry's Standard Dummy Text Ever Since The 1500s, When An Unknown Printer Took A Galley
-							Of Type
-							And Scrambled It To Make A Type Specimen Book.</p>
-
-
-						<br />
-
-						<p class="head">Education</p>
-						<p>HIGH SCHOOL OF CBSE (2009 - 2010)</p>
-						<p>BACHELOR OF COMPUTER APPLICATION (2013 - 2015)</p>
-						<p>MASTER OF COMPUTER APPLICATION (2015 - 2018)</p>
-						<br />
 					</div>
 				</div>
 			</div>

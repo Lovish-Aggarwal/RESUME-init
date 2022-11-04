@@ -398,7 +398,7 @@ def educationUpdate(id):
 
     upedu=educationModel.query.get(id)
     print(upedu)
-    upedu.institute=request.form['institute']
+    upedu.insitute=request.form['institute']
     upedu.course=request.form['course']
     upedu.duration=request.form['duration']
     upedu.grades=request.form['grades']

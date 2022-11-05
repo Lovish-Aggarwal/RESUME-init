@@ -4,7 +4,8 @@ from sqlalchemy import exc
 
 app = Flask(__name__)
 app.secret_key = 'resumeBuilder'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:hr@localhost/resumeBuilder'
+# app.config['SQLALCHEMY_DATABASE_URI']='mysql://root:hr@localhost/resumeBuilder'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql://ugkdax2p8yl3qcva:ZnIBCamnvqvbTiKkfg7M@b7ar3u2nbjahvczxcllc-mysql.services.clever-cloud.com:3306/b7ar3u2nbjahvczxcllc'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -416,4 +417,4 @@ def educationUpdate(id):
     return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
 
 if __name__ == '__main__':
-   app.run(debug=True,port=5000)
+   app.run(debug=True,port=3306)

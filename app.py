@@ -417,4 +417,4 @@ def educationUpdate(id):
     return redirect(url_for('education',pg=1,msg="Education Updated with id="+str(id)))
 
 if __name__ == '__main__':
-   app.run(debug=True,port=3306)
+   app.run(debug=True)

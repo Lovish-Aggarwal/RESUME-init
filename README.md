@@ -2,11 +2,11 @@
 Resume builder Using Flask Python.
 
 ## Discription 
-This Web site helps user to create resume :writing_hand:. <br>
-User can add multiple Skills , Education &  Wrok Experience backgrounds and details.<br>
-User can easily Downloads the Resume in .pdf format also <b>website provides a shareable link :link: to every user's resume while can be share directly to a third person</b> :technologist:.<br>
-Benifit of shareable link is that User can share a single link to Multiple places :label: and when ever user updated its resume on website it automatically reflects :writing_hand: to the share resume link.<br>
-Thus user has no worries  to share a new resume each time He/She has an update .
+This Web site helps the user to create a resume ✍️.<br>
+Users can add multiple Skills, Education & Work Experience backgrounds, and details.<br>
+Users can easily Download the Resume in .pdf format also website provides a shareable link 🔗 to every user's resume which can be shared directly with a third person 🧑‍💻.<br>
+The benefit of the shareable link is that the User can share a single link to Multiple places 🏷️ and whenever the user updated their resume on the website it automatically reflects ✍️ to the share resume link.<br>
+Thus the user has no worries to share a new resume each time He/She has an update.<br>
 
 ## Techstack Used
 * Frontend :
